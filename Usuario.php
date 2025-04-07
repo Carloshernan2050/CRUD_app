@@ -4,31 +4,59 @@ require_once 'database.php';
 
 class Usuario
 {
-    private PDO $conn;
+    private PDO $conexion;
 
     public function __construct()
     {
-        $this->conn = (new Database())->getConnection();
+        $this->conexion = (new Database())->getConnection();
     }
 
     public function listarUsuarios()
     {
-        // Lógica para obtener todos los usuarios
+        $sql = "SELECT * FROM personas";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function obtenerUsuario($id)
     {
-        // Lógica para obtener un usuario por ID
+        $sql = "SELECT * FROM personas WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function crearUsuario()
+    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono)
     {
-        // Lógica para insertar usuario
+        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
+        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198')";
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->bindParam(':primernombre', $primernombre);
+        $stmt->bindParam(':segundonombre', $segundonombre);
+        $stmt->bindParam(':primerapellido', $primerapellido);
+        $stmt->bindParam(':segundoapellido', $segundoapellido);
+        $stmt->bindParam(':edad', $edad);
+        $stmt->bindParam(':telefono', $telefono);
     }
 
     public function actualizarUsuario()
     {
-        // Lógica para actualizar un usuario
+        $sql = "UPDATE personas 
+        SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
+        WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->bindParam(':primernombre', $primernombre);
+        $stmt->bindParam(':segundonombre', $segundonombre);
+        $stmt->bindParam(':primerapellido', $primerapellido);
+        $stmt->bindParam(':segundoapellido', $segundoapellido);
+        $stmt->bindParam(':edad', $edad);
+        $stmt->bindParam(':telefono', $telefono);
     }
 
     public function eliminarUsuario($id)
