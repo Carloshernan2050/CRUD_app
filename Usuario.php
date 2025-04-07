@@ -2,17 +2,14 @@
 
 require_once 'database.php';
 
-class Usuario
-{
+class Usuario {
     private PDO $conexion;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->conexion = (new Database())->getConnection();
     }
 
-    public function listarUsuarios()
-    {
+    public function listarUsuarios() {
         $sql = "SELECT * FROM personas";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -20,8 +17,7 @@ class Usuario
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function obtenerUsuario($id)
-    {
+    public function obtenerUsuario($id) {
         $sql = "SELECT * FROM personas WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -30,8 +26,7 @@ class Usuario
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono)
-    {
+    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono) {
         $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
         VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198')";
         $stmt = $this->conexion->prepare($sql);
@@ -42,10 +37,11 @@ class Usuario
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
+
+        return $stmt->execute();
     }
 
-    public function actualizarUsuario()
-    {
+    public function actualizarUsuario() {
         $sql = "UPDATE personas 
         SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
         WHERE id = :id";
@@ -61,6 +57,6 @@ class Usuario
 
     public function eliminarUsuario($id)
     {
-        // Lógica para eliminar un usuario
+        
     }
 }
