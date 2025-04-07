@@ -26,9 +26,9 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono) {
-        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
-        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198')";
+    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
+        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono,correo,direccion)
+        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198',carloshernan@gmail.com,calle26#54-64)";
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
@@ -37,13 +37,15 @@ class Usuario {
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
+        $stmt->bindParam(':correo', $correo); 
+        $stmt->bindParam(':direccion', $direccion);
 
         return $stmt->execute();
     }
 
     public function actualizarUsuario() {
         $sql = "UPDATE personas 
-        SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
+        SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono, correo = :corre, direccion = :direccion
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
 
@@ -57,6 +59,8 @@ class Usuario {
 
     public function eliminarUsuario($id)
     {
-        
+        $sql = "DELETE FROM  personas WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     }
 }
