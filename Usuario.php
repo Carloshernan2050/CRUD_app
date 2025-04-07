@@ -25,10 +25,10 @@ class Usuario {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
     public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono) {
         $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
         VALUES ('primernombre','segundonombre','primerapellido','segundoapellido','edad','telefono')";
+
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
@@ -37,14 +37,17 @@ class Usuario {
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
+        $stmt->bindParam(':correo', $correo); 
+        $stmt->bindParam(':direccion', $direccion);
 
         return $stmt->execute();
     }
 
     public function actualizarUsuario() {
-        $sql = "UPDATE personas 
-                SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
+        $sql = "UPDATE personas
+                SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono, correo = :correo, direccion = :direccion
                 WHERE id = :id";
+
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
@@ -53,12 +56,16 @@ class Usuario {
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
+        $stmt->bindParam(':correo', $correo); 
+        $stmt->bindParam(':direccion', $direccion);
 
         return $stmt;
     }
 
     public function eliminarUsuario($id)
     {
-        
+        $sql = "DELETE FROM  personas WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     }
 }
