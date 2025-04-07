@@ -28,7 +28,7 @@ class Usuario {
 
     public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono) {
         $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
-        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198')";
+        VALUES ('primernombre','segundonombre','primerapellido','segundoapellido','edad','telefono')";
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
@@ -43,8 +43,8 @@ class Usuario {
 
     public function actualizarUsuario() {
         $sql = "UPDATE personas 
-        SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
-        WHERE id = :id";
+                SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono
+                WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
@@ -53,6 +53,8 @@ class Usuario {
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
+
+        return $stmt;
     }
 
     public function eliminarUsuario($id)

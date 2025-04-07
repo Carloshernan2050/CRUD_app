@@ -17,6 +17,20 @@ class interfazusuario {
         echo "4. Actualizar usuario \n";
         echo "5. Eliminar usuario \n";
         echo "6. Salir \n";
+    }
+    function opccion() {
+        $opcion = fgets(STDIN);
+
+        $opcion = trim($opcion);
+        return $opcion;
+    }
+
+    function eleccionAC() {
+        if($opcion = 1) {
+            
+        }
+    }
+    
 
     }
 
