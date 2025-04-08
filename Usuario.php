@@ -25,17 +25,10 @@ class Usuario {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-<<<<<<< HEAD
 //funcion para crear un usuario nuevo con todos sus datos y quede guardado en la base de datos
     public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
         $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono,correo,direccion)
         VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198',carloshernan@gmail.com,calle26#54-64)";
-=======
-    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono) {
-        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono)
-        VALUES ('primernombre','segundonombre','primerapellido','segundoapellido','edad','telefono')";
-
->>>>>>> c52bffdf14db8470d7a22a1b6f3068738f0b6ccf
         $stmt = $this->conexion->prepare($sql);
 
         $stmt->bindParam(':primernombre', $primernombre);
