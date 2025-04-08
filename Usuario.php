@@ -26,22 +26,24 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 //funcion para crear un usuario nuevo con todos sus datos y quede guardado en la base de datos
-    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
-        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono,correo,direccion)
-        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198',carloshernan@gmail.com,calle26#54-64)";
-        $stmt = $this->conexion->prepare($sql);
+public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
+    $sql = "INSERT INTO personas 
+    (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, telefono, correo, direccion) 
+    VALUES (:primernombre, :segundonombre, :primerapellido, :segundoapellido, :edad, :telefono, :correo, :direccion)";
 
-        $stmt->bindParam(':primernombre', $primernombre);
-        $stmt->bindParam(':segundonombre', $segundonombre);
-        $stmt->bindParam(':primerapellido', $primerapellido);
-        $stmt->bindParam(':segundoapellido', $segundoapellido);
-        $stmt->bindParam(':edad', $edad);
-        $stmt->bindParam(':telefono', $telefono);
-        $stmt->bindParam(':correo', $correo); 
-        $stmt->bindParam(':direccion', $direccion);
+    $stmt = $this->conexion->prepare($sql);
 
-        return $stmt->execute();
-    }
+    $stmt->bindParam(':primernombre', $primernombre);
+    $stmt->bindParam(':segundonombre', $segundonombre);
+    $stmt->bindParam(':primerapellido', $primerapellido);
+    $stmt->bindParam(':segundoapellido', $segundoapellido);
+    $stmt->bindParam(':edad', $edad);
+    $stmt->bindParam(':telefono', $telefono);
+    $stmt->bindParam(':correo', $correo);
+    $stmt->bindParam(':direccion', $direccion);
+
+    return $stmt->execute();
+}
 //funcion para actualizar datos del usuario
     public function actualizarUsuario() {
         $sql = "UPDATE personas
