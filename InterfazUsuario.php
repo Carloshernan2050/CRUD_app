@@ -9,7 +9,7 @@ class InterfazUsuario {
     }
 
     public function menu() {
-        echo "\n===== MENU PRINCIPAL =====\n";
+        echo "\n MENU PRINCIPAL \n";
         echo "1. Lista de usuarios\n";
         echo "2. Obtener usuario por ID\n";
         echo "3. Crear usuario\n";
