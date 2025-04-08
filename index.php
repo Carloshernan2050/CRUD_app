@@ -1,10 +1,12 @@
 <?php
-
+require_once 'database.php';
 require_once 'Usuario.php';
+require_once 'InterfazUsuario.php';
 
-$usuario = new Usuario();
+$interfaz = new InterfazUsuario();
 
-
-// Aquí puedes probar:
-// $usuario->crearUsuario("Ana", "ana@mail.com", 22);
-// print_r($usuario->listarUsuarios());
+while (true) {
+    $interfaz->menu();
+    $opcion = $interfaz->opcion();
+    $interfaz->eleccionAC($opcion);
+}

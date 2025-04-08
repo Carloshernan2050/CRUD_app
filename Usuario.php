@@ -8,64 +8,67 @@ class Usuario {
     public function __construct() {
         $this->conexion = (new Database())->getConnection();
     }
-// funcion para ver la lista de usuarios 
+
+    // Ver la lista de todos los usuarios
     public function listarUsuarios() {
         $sql = "SELECT * FROM personas";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-//funcion para obtener los datos de un usuario en especifico con su id
+
+    // Obtener un usuario específico por su ID
     public function obtenerUsuario($id) {
         $sql = "SELECT * FROM personas WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-//funcion para crear un usuario nuevo con todos sus datos y quede guardado en la base de datos
-    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
-        $sql = "INSERT INTO personas (primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,edad,telefono,correo,direccion)
-        VALUES ('Carlos','Hernan','Molina','Arenas','20','3102396198',carloshernan@gmail.com,calle26#54-64)";
-        $stmt = $this->conexion->prepare($sql);
 
+    // Crear un nuevo usuario
+    public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
+        $sql = "INSERT INTO personas (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, telefono, correo, direccion)
+                VALUES (:primernombre, :segundonombre, :primerapellido, :segundoapellido, :edad, :telefono, :correo, :direccion)";
+        
+        $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':primernombre', $primernombre);
         $stmt->bindParam(':segundonombre', $segundonombre);
         $stmt->bindParam(':primerapellido', $primerapellido);
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
-        $stmt->bindParam(':correo', $correo); 
+        $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':direccion', $direccion);
 
         return $stmt->execute();
     }
-//funcion para actualizar datos del usuario
-    public function actualizarUsuario() {
+
+    // Actualizar los datos de un usuario
+    public function actualizarUsuario($id, $primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
         $sql = "UPDATE personas
-                SET primer_nombre = :primernombre, segundo_nombre = :segundo_nombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono, correo = :correo, direccion = :direccion
+                SET primer_nombre = :primernombre, segundo_nombre = :segundonombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono, correo = :correo, direccion = :direccion
                 WHERE id = :id";
-
+        
         $stmt = $this->conexion->prepare($sql);
-
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':primernombre', $primernombre);
         $stmt->bindParam(':segundonombre', $segundonombre);
         $stmt->bindParam(':primerapellido', $primerapellido);
         $stmt->bindParam(':segundoapellido', $segundoapellido);
         $stmt->bindParam(':edad', $edad);
         $stmt->bindParam(':telefono', $telefono);
-        $stmt->bindParam(':correo', $correo); 
+        $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':direccion', $direccion);
 
-        return $stmt;
+        return $stmt->execute();
     }
-//funcion para eliminar usuario
-    public function eliminarUsuario($id)
-    {
-        $sql = "DELETE FROM  personas WHERE id = :id";
+
+    // Eliminar un usuario por su ID
+    public function eliminarUsuario($id) {
+        $sql = "DELETE FROM personas WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }
