@@ -26,6 +26,7 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
     // Crear un nuevo usuario
     public function crearUsuario($primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
         $sql = "INSERT INTO personas (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, telefono, correo, direccion)
@@ -46,6 +47,7 @@ class Usuario {
 
     // Actualizar los datos de un usuario
     public function actualizarUsuario($id, $primernombre, $segundonombre, $primerapellido, $segundoapellido, $edad, $telefono, $correo, $direccion) {
+
         $sql = "UPDATE personas
                 SET primer_nombre = :primernombre, segundo_nombre = :segundonombre, primer_apellido = :primerapellido, segundo_apellido = :segundoapellido, edad = :edad, telefono = :telefono, correo = :correo, direccion = :direccion
                 WHERE id = :id";
